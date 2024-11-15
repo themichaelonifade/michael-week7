@@ -1,0 +1,43 @@
+name: Code Quality and Build
+
+on:
+  push:
+    branches:
+      - main  # Trigger only on push to the main branch
+
+jobs:
+  # Job 1: Code Quality Check
+  code_quality_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Run GitHub Super Linter for Code Quality
+        uses: github/super-linter@v4
+        env:
+          RUN_LOCAL: true  # To run locally without errors
+          
+  # Job 2: Print Variables
+  print_variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Print GitHub Token and Username
+        run: |
+          echo "GitHub Token: ${{ secrets.GIT_TOKEN }}"
+          echo "GitHub Username: ${{ secrets.USERNAME }}"
+
+  # Job 3: Build
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print files and directories
+        run: |
+          echo "Listing all files and directories:"
+          ls -R
